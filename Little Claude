@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Little Claude - 大模型 Agent 桌面工作站</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+            background: #0f0f14;
+            color: #e0e0e0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 700px;
+            width: 100%;
+            background: #1a1a24;
+            border: 1px solid #2a2a3a;
+            border-radius: 20px;
+            padding: 50px 40px;
+            text-align: center;
+        }
+        .icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            margin: 0 auto 24px;
+        }
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        .tagline {
+            color: #a29bfe;
+            font-size: 15px;
+            margin-bottom: 24px;
+        }
+        .description {
+            color: #a0a0b8;
+            font-size: 15px;
+            line-height: 1.8;
+            margin-bottom: 32px;
+            text-align: left;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin-bottom: 36px;
+            text-align: left;
+        }
+        .feature {
+            background: #22222f;
+            border-radius: 12px;
+            padding: 16px;
+            font-size: 14px;
+            color: #c0c0d0;
+        }
+        .feature::before {
+            content: "✦ ";
+            color: #a29bfe;
+        }
+        .divider {
+            border: none;
+            border-top: 1px solid #2a2a3a;
+            margin: 0 0 32px;
+        }
+        .section-title {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #6a6a7e;
+            margin-bottom: 16px;
+        }
+        .download-buttons {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        }
+        .btn-kuake {
+            background: #2b2b3a;
+            color: #fff;
+            border: 1px solid #3a3a50;
+        }
+        .btn-kuake:hover { background: #3a3a50; }
+        .btn-baidu {
+            background: #2468e0;
+            color: #fff;
+        }
+        .btn-baidu:hover { background: #1a5ad4; }
+        .btn-github {
+            background: #fff;
+            color: #0f0f14;
+        }
+        .btn-github:hover { background: #e8e8e8; }
+        .footer {
+            margin-top: 36px;
+            font-size: 12px;
+            color: #4a4a5e;
+        }
+        .footer a {
+            color: #6c5ce7;
+            text-decoration: none;
+        }
+        @media (max-width: 500px) {
+            .container { padding: 32px 20px; }
+            h1 { font-size: 24px; }
+            .download-buttons { flex-direction: column; }
+            .btn { justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ===== 图标区 ===== -->
+        <div class="icon">🖥️</div>
+        <!-- ===== 项目名和标语 ===== -->
+        <h1>Little Claude</h1>
+        <p class="tagline">大模型 Agent 桌面工作站 — 零门槛使用最强 AI 编程助手</p>
+        <!-- ===== 项目介绍 ===== -->
+        <p class="description">
+            Claude Code 和 Codex 是当前最强的 AI 编程工具，但仅提供命令行界面，对普通用户门槛极高。
+            Little Claude 将其封装为跨平台桌面应用（Tauri 2 + React 19 + Rust），提供图形化界面与一键安装体验，
+            让非技术用户也能轻松使用大模型进行编程和日常任务。<br><br>
+            ✅ 支持 Anthropic / OpenAI 兼容 / DeepSeek / 智谱 / 通义千问等多模型动态切换<br>
+            ✅ SDK 双向控制协议，工具调用经交互式权限卡片审批，安全可控<br>
+            ✅ NDJSON 流式推理，思考链可视化，多 Tab 并行会话，支持 Rewind 回退<br>
+            ✅ 集成视频分析、图像识别等多模态能力<br>
+            ✅ 便携式单文件 EXE（约 22MB），无需安装即可运行
+        </p>
+        <!-- ===== 特性 ===== -->
+        <div class="features">
+            <div class="feature">多模型统一调度与成本优化</div>
+            <div class="feature">Agent 工具调用安全机制</div>
+            <div class="feature">流式推理 · 思考链可视化</div>
+            <div class="feature">多模态：视频分析 + 图像识别</div>
+            <div class="feature">多 Tab 并行 · Rewind 回退</div>
+            <div class="feature">一键安装 · 便携版 22MB</div>
+        </div>
+        <hr class="divider">
+        <!-- ===== 下载区域 ===== -->
+        <p class="section-title">📥 下载渠道</p>
+        <div class="download-buttons">
+            <a href="#" class="btn btn-kuake" style="opacity:0.5;pointer-events:none;">
+                <span>☁️</span> 夸克网盘（即将上线）
+            </a>
+            <a href="#" class="btn btn-baidu" style="opacity:0.5;pointer-events:none;">
+                <span>📦</span> 百度网盘（即将上线）
+            </a>
+            <a href="https://github.com/qingyu321/Little-Claude" class="btn btn-github" target="_blank">
+                <span>⭐</span> GitHub
+            </a>
+        </div>
+        <!-- ===== 页脚 ===== -->
+        <p class="footer">
+            完全免费 · 开源 · Made by 高渊博 · 去 <a href="https://github.com/qingyu321/Little-Claude" target="_blank">GitHub</a> 点个 Star ⭐
+        </p>
+    </div>
+</body>
+</html>
