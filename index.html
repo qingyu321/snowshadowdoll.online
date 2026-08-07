@@ -118,22 +118,6 @@
             font-weight: 800;
             color: #1a1a2e;
         }
-        .stat-num .plus {
-            font-size: 16px;
-            color: #00b894;
-            margin-left: 2px;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        .stat-num .plus.show {
-            opacity: 1;
-            animation: popUp 0.6s ease;
-        }
-        @keyframes popUp {
-            0%   { transform: translateY(0) scale(1); opacity: 1; }
-            50%  { transform: translateY(-14px) scale(1.3); opacity: 1; }
-            100% { transform: translateY(-20px) scale(1); opacity: 0; }
-        }
         .stat-label {
             font-size: 13px;
             color: var(--sub);
@@ -355,27 +339,6 @@
             text-decoration: none;
             font-weight: 600;
         }
-        /* ========== Toast ========== */
-        .toast {
-            position: fixed;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: #1a1a2e;
-            color: #fff;
-            padding: 12px 28px;
-            border-radius: 30px;
-            font-size: 14px;
-            font-weight: 600;
-            z-index: 999;
-            pointer-events: none;
-            opacity: 0;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s;
-        }
-        .toast.show {
-            transform: translateX(-50%) translateY(0);
-            opacity: 1;
-        }
         @media (max-width: 600px) {
             .hero { padding: 60px 20px 40px; }
             .hero h1 { font-size: 30px; }
@@ -389,8 +352,6 @@
 <body>
     <!-- 背景粒子 -->
     <div class="particles" id="particles"></div>
-    <!-- Toast -->
-    <div class="toast" id="toast">感谢关注！已累计 <span id="toastCount">0</span> 次点击</div>
     <!-- ===== Hero ===== -->
     <header class="hero">
         <div class="hero-badge">
@@ -400,8 +361,8 @@
         <p class="subtitle">不用折腾命令行，也能让 AI 帮你干活。写代码、看视频、理资料，就装这一个应用</p>
         <div class="stats-row">
             <div class="stat-item">
-                <div class="stat-num" id="clickCount">23,581</div>
-                <div class="stat-label">累计点击</div>
+                <div class="stat-num"><span id="busuanzi_value_site_pv">--</span></div>
+                <div class="stat-label">真实访问</div>
             </div>
             <div class="stat-item">
                 <div class="stat-num">12+</div>
@@ -540,43 +501,10 @@
         <a href="https://github.com/qingyu321/Little-Claude" target="_blank">GitHub 上点个 Star</a> 是对我最大的鼓励<br>
         <span style="color:#aaa;font-size:11px;">Little Claude 是 Claude Code CLI 的非官方开源桌面客户端，与 Anthropic 公司无关</span>
     </footer>
+    <!-- 不蒜子：真实访问量统计（免费开源） -->
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     <script>
     (function(){
-        // ========== 点击计数器 ==========
-        const STORAGE_KEY = 'lc_click_count';
-        const DEFAULT_COUNT = 23581;
-        let count = parseInt(localStorage.getItem(STORAGE_KEY)) || DEFAULT_COUNT;
-        if (!localStorage.getItem(STORAGE_KEY)) {
-            localStorage.setItem(STORAGE_KEY, DEFAULT_COUNT);
-        }
-        const countEl = document.getElementById('clickCount');
-        const toast = document.getElementById('toast');
-        const toastCount = document.getElementById('toastCount');
-        let toastTimer;
-        function updateDisplay() {
-            countEl.textContent = count.toLocaleString();
-        }
-        function showToast() {
-            toastCount.textContent = count.toLocaleString();
-            toast.classList.add('show');
-            clearTimeout(toastTimer);
-            toastTimer = setTimeout(function(){
-                toast.classList.remove('show');
-            }, 2500);
-        }
-        function increment() {
-            count++;
-            localStorage.setItem(STORAGE_KEY, count);
-            updateDisplay();
-            showToast();
-        }
-        // 绑定所有下载按钮
-        document.querySelectorAll('.js-download-btn').forEach(function(btn) {
-            btn.addEventListener('click', function(e) {
-                increment();
-            });
-        });
-        updateDisplay();
         // ========== 背景粒子 ==========
         var container = document.getElementById('particles');
         var colors = ['#6c5ce7','#e17055','#00b894','#fdcb6e','#74b9ff','#fd79a8'];
@@ -602,18 +530,6 @@
             });
         }, { threshold: 0.15 });
         cards.forEach(function(c){ observer.observe(c); });
-        // ========== 数字跳动效果 ==========
-        var el = document.getElementById('clickCount');
-        var target = count;
-        var duration = 2000;
-        var start = performance.now();
-        function tick(now){
-            var progress = Math.min((now-start)/duration, 1);
-            var eased = 1 - Math.pow(1-progress, 3);
-            el.textContent = Math.floor(eased*target).toLocaleString();
-            if(progress<1) requestAnimationFrame(tick);
-        }
-        requestAnimationFrame(tick);
     })();
     </script>
 </body>
