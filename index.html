@@ -39,8 +39,9 @@
         }
         @keyframes floatUp {
             0%   { transform: translateY(100vh) scale(0); opacity: 0; }
-            10%  { opacity: 1; }
-            90%  { opacity: 1; }
+            5%   { opacity: 0.9; }
+            25%  { opacity: 1; }
+            90%  { opacity: 0.8; }
             100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
         }
         /* ========== Hero ========== */
@@ -179,8 +180,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
             flex-shrink: 0;
+            transition: transform 0.3s;
+        }
+        .highlight-card .card-icon svg {
+            width: 26px; height: 26px;
+        }
+        .highlight-card:hover .card-icon {
+            transform: scale(1.1) rotate(-5deg);
         }
         .highlight-card h3 {
             font-size: 18px;
@@ -192,12 +199,12 @@
             font-size: 14px;
             line-height: 1.8;
         }
-        .c1 .card-icon { background: #eee8fd; }
-        .c2 .card-icon { background: #fde8e8; }
-        .c3 .card-icon { background: #e8f4fd; }
-        .c4 .card-icon { background: #e8fde8; }
-        .c5 .card-icon { background: #fdf3e8; }
-        .c6 .card-icon { background: #fde8f8; }
+        .c1 .card-icon { background: #eee8fd; color: #6c5ce7; }
+        .c2 .card-icon { background: #fde8e8; color: #e17055; }
+        .c3 .card-icon { background: #e8f4fd; color: #0984e3; }
+        .c4 .card-icon { background: #e8fde8; color: #00b894; }
+        .c5 .card-icon { background: #fdf3e8; color: #f39c12; }
+        .c6 .card-icon { background: #fde8f8; color: #e84393; }
         /* ========== 功能网格 ========== */
         .section-title {
             font-size: 13px;
@@ -207,6 +214,22 @@
             font-weight: 700;
             margin-bottom: 20px;
             text-align: center;
+        }
+        .section-title::before,
+        .section-title::after {
+            content: "";
+            display: inline-block;
+            width: 36px;
+            height: 1px;
+            background: var(--border);
+            vertical-align: middle;
+            margin: 0 14px;
+        }
+        .geek-note {
+            text-align: center;
+            color: var(--sub);
+            font-size: 13px;
+            margin: -8px 0 20px;
         }
         .feature-grid {
             display: grid;
@@ -267,8 +290,15 @@
             box-shadow: 0 6px 24px rgba(0,0,0,0.08);
         }
         .platform-card .platform-icon {
-            font-size: 36px;
-            margin-bottom: 10px;
+            width: 40px; height: 40px;
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1a1a2e;
+        }
+        .platform-card .platform-icon svg {
+            width: 36px; height: 36px;
         }
         .platform-card .platform-name {
             font-weight: 700;
@@ -360,14 +390,14 @@
     <!-- 背景粒子 -->
     <div class="particles" id="particles"></div>
     <!-- Toast -->
-    <div class="toast" id="toast">感谢关注 ❤️ 已累计 <span id="toastCount">0</span> 次点击</div>
+    <div class="toast" id="toast">感谢关注！已累计 <span id="toastCount">0</span> 次点击</div>
     <!-- ===== Hero ===== -->
     <header class="hero">
         <div class="hero-badge">
             <span class="dot"></span> 活跃开发中 · v1.1.1
         </div>
         <h1>让 AI 助手<span class="gradient">触手可及</span></h1>
-        <p class="subtitle">Little Claude 把命令行里的编程神器，变成人人都能上手的桌面应用</p>
+        <p class="subtitle">不用折腾命令行，也能让 AI 帮你干活。写代码、看视频、理资料，就装这一个应用</p>
         <div class="stats-row">
             <div class="stat-item">
                 <div class="stat-num" id="clickCount">23,581</div>
@@ -387,69 +417,81 @@
     <div class="main">
         <div class="highlight-card c1">
             <div class="card-header">
-                <div class="card-icon">🔀</div>
-                <h3>想用哪个模型，自己说了算</h3>
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                </div>
+                <h3>Claude、GPT、DeepSeek，不用纠结装哪个了</h3>
             </div>
             <p>
-                不管是 Claude、GPT，还是国产的 DeepSeek、智谱、通义千问——一个应用全打通。
-                写简单脚本用小模型省钱，啃硬骨头时切大模型保质量，切换过程行云流水，连刷新页面都不用。
+                现在的 AI 模型太多了，这个说它聪明，那个说它便宜，装一堆软件又乱又占地方。
+                Little Claude 把它们全收进一个应用里——写文案用小模型，改代码切大模型，
+                想换随时换，跟换输入法一样顺手。
             </p>
         </div>
         <div class="highlight-card c2">
             <div class="card-header">
-                <div class="card-icon">🛡️</div>
-                <h3>它做事，你点头——每一步都经过你的同意</h3>
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <h3>它想动你的文件？先问过你</h3>
             </div>
             <p>
-                AI 想读文件、写代码、执行命令？不会偷偷摸摸干。
-                每一步都会跳出简洁的权限卡片，绿灯还是红灯你说了算。在机器效率和你对电脑的掌控之间，画了一条清晰的红线。
+                让 AI 碰你的电脑，谁都怕它乱来。所以它每一步都会先弹出一张卡片问你：
+                这个文件能读吗？这条命令能跑吗？你点头它才动。它在你的眼皮子底下干活，跑不远的。
             </p>
         </div>
         <div class="highlight-card c3">
             <div class="card-header">
-                <div class="card-icon">📡</div>
-                <h3>看得见它在想什么，也回得去任何一步</h3>
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </div>
+                <h3>它不是"啪"地丢个答案就完事</h3>
             </div>
             <p>
-                思考过程实时流式渲染，AI 的推理链一目了然——不黑箱。
-                回复速度实时显示，tok/s 尽在眼前。消息想带走？选中即复制，正文、思考过程、工具调用都能复制。
-                支持多 Tab 同时对话，每个会话独立运转。聊到一半觉得方向不对？一键退回到任意历史节点，重新分叉，不用从头开始。
+                回答是一行一行流出来的，你能看着它推理、改主意、甚至发现自己说错了往回找补。
+                聊着聊着跑偏了？退回到任何一步重新来，每一步都留了后悔药。
             </p>
         </div>
         <div class="highlight-card c4">
             <div class="card-header">
-                <div class="card-icon">👁️</div>
-                <h3>不止读代码，还能看视频、识图片、当面试官</h3>
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+                </div>
+                <h3>刷到个视频教程，三分钟帮你啃完</h3>
             </div>
             <p>
-                拖张截图进去，它能看懂。丢个视频链接——不管是 B 站教程还是 YouTube 讲座——
-                自动下载、语音转文字、逐帧分析画面，两三分钟出结构化报告。原本要啃半小时的视频课，喝口水的功夫就看完了。
-                内置面试助手：把题目丢给它，模型直接识别答案，还能本地识别转文字发送，双通道兜底，回答不再掉线。
+                B 站、YouTube 的链接丢进来，自动下载、语音转文字、逐帧看画面，
+                几分钟吐给你一份要点总结。还有面试模式：题目截个图丢过去，它帮你识别题目、理清思路，
+                面试前临时抱佛脚就靠它了。
             </p>
         </div>
         <div class="highlight-card c5">
             <div class="card-header">
-                <div class="card-icon">💬</div>
-                <h3>你的对话历史，永远找得回来</h3>
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                </div>
+                <h3>上周聊的啥？搜一下就回到现场</h3>
             </div>
             <p>
-                全量历史全文检索，按日期、项目、模型类型随意筛选，点一下跳回当时的对话现场。
-                还能在 Claude 格式和 Codex 格式之间一键互转，换了工具数据也不丢。支持导出 Markdown、JSON，想怎么备份都行。
+                历史对话全部全文可搜，按日期、按项目筛一下，点进去就是当时的聊天现场。
+                换工具也不怕搬家——Claude 和 Codex 的聊天记录一键互转，想导出 Markdown、JSON 都随你。
             </p>
         </div>
         <div class="highlight-card c6">
             <div class="card-header">
-                <div class="card-icon">📦</div>
-                <h3>下载解压就能用，更新自动推送</h3>
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                </div>
+                <h3>不用配环境，下载完就能开始用</h3>
             </div>
             <p>
-                市面上类似的工具光是配置环境就能劝退大半。Little Claude 做了全自动安装向导，
-                自动检测网络选最快镜像，依赖链一条龙搞定。Windows 用户还能拿到单文件便携版，22MB，免安装免管理员，U 盘带走都行。
-                新版本发布后应用内一键升级，签名校验保证更新安全可靠，永远用上最新功能。
+                受够了"先装个 Python，再配个环境变量"？安装向导全自动搞定，
+                Windows 还有 22MB 的免安装版，U 盘一插就能跑。以后出新版本，应用里一键升级，不用到处找安装包。
             </p>
         </div>
         <!-- 技术特色 -->
-        <p class="section-title">✨ 技术亮点</p>
+        <p class="section-title">技术亮点</p>
+        <p class="geek-note">下面这些是写给懂行的朋友看的，纯用户可以直接往下滑去下载。</p>
         <div class="feature-grid">
             <div class="feature-tag">多模型 API 抽象层</div>
             <div class="feature-tag">Tauri 2 原生体验</div>
@@ -466,21 +508,27 @@
         </div>
         <!-- 下载区域 -->
         <div class="download-section">
-            <p class="section-title">📥 选择你的下载方式</p>
+            <p class="section-title">选择你的下载方式</p>
             <p style="color:var(--sub);font-size:14px;margin-bottom:8px;">完全免费 · 开源 · 持续更新</p>
             <div class="platform-grid">
                 <div class="platform-card">
-                    <div class="platform-icon">⭐</div>
+                    <div class="platform-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                    </div>
                     <div class="platform-name">GitHub</div>
                     <a href="https://github.com/qingyu321/Little-Claude" class="platform-btn btn-white js-download-btn" target="_blank">前往下载</a>
                 </div>
                 <div class="platform-card">
-                    <div class="platform-icon">☁️</div>
+                    <div class="platform-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+                    </div>
                     <div class="platform-name">夸克网盘</div>
                     <button class="platform-btn btn-outline js-download-btn" disabled>即将上线</button>
                 </div>
                 <div class="platform-card">
-                    <div class="platform-icon">📦</div>
+                    <div class="platform-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                    </div>
                     <div class="platform-name">百度网盘</div>
                     <button class="platform-btn btn-outline js-download-btn" disabled>即将上线</button>
                 </div>
@@ -489,7 +537,7 @@
     </div>
     <footer class="footer">
         由 <strong>高渊博</strong> 独立设计与开发 ·
-        <a href="https://github.com/qingyu321/Little-Claude" target="_blank">GitHub 上点个 Star ⭐</a> 是对我最大的鼓励<br>
+        <a href="https://github.com/qingyu321/Little-Claude" target="_blank">GitHub 上点个 Star</a> 是对我最大的鼓励<br>
         <span style="color:#aaa;font-size:11px;">Little Claude 是 Claude Code CLI 的非官方开源桌面客户端，与 Anthropic 公司无关</span>
     </footer>
     <script>
@@ -532,16 +580,16 @@
         // ========== 背景粒子 ==========
         var container = document.getElementById('particles');
         var colors = ['#6c5ce7','#e17055','#00b894','#fdcb6e','#74b9ff','#fd79a8'];
-        for(var i=0; i<25; i++){
+        for(var i=0; i<60; i++){
             var dot = document.createElement('div');
             dot.className = 'particle';
-            var size = Math.random() * 6 + 3;
+            var size = Math.random() * 9 + 5;
             dot.style.width = size + 'px';
             dot.style.height = size + 'px';
             dot.style.left = Math.random() * 100 + '%';
             dot.style.background = colors[Math.floor(Math.random()*colors.length)];
-            dot.style.animationDuration = (Math.random() * 12 + 10) + 's';
-            dot.style.animationDelay = (Math.random() * 10) + 's';
+            dot.style.animationDuration = (Math.random() * 8 + 6) + 's';
+            dot.style.animationDelay = (Math.random() * 8) + 's';
             container.appendChild(dot);
         }
         // ========== 卡片滚动渐现 ==========
