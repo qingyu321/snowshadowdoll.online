@@ -16,9 +16,7 @@
             --shadow: 0 2px 16px rgba(0,0,0,0.06);
             --radius: 18px;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
             background: var(--bg);
@@ -26,7 +24,6 @@
             line-height: 1.7;
             overflow-x: hidden;
         }
-
         /* ========== 动态背景粒子 ========== */
         .particles {
             position: fixed;
@@ -46,7 +43,6 @@
             90%  { opacity: 1; }
             100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
         }
-
         /* ========== Hero ========== */
         .hero {
             position: relative;
@@ -87,7 +83,6 @@
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
         .hero h1 {
             font-size: 48px;
             font-weight: 800;
@@ -106,7 +101,6 @@
             margin-top: 14px;
             animation: fadeInUp 0.6s ease 0.2s both;
         }
-
         /* ========== 数据条 ========== */
         .stats-row {
             display: flex;
@@ -144,7 +138,6 @@
             color: var(--sub);
             margin-top: 4px;
         }
-
         /* ========== 主容器 ========== */
         .main {
             position: relative;
@@ -153,7 +146,6 @@
             margin: 0 auto;
             padding: 0 24px 80px;
         }
-
         /* ========== 亮点卡片 ========== */
         .highlight-card {
             background: var(--card);
@@ -206,7 +198,6 @@
         .c4 .card-icon { background: #e8fde8; }
         .c5 .card-icon { background: #fdf3e8; }
         .c6 .card-icon { background: #fde8f8; }
-
         /* ========== 功能网格 ========== */
         .section-title {
             font-size: 13px;
@@ -241,7 +232,6 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 16px rgba(108,92,231,0.12);
         }
-
         /* ========== 下载卡片 ========== */
         .download-section {
             background: var(--card);
@@ -320,7 +310,6 @@
             border-color: var(--accent) !important;
             color: var(--accent);
         }
-
         /* ========== Footer ========== */
         .footer {
             position: relative;
@@ -336,7 +325,6 @@
             text-decoration: none;
             font-weight: 600;
         }
-
         /* ========== Toast ========== */
         .toast {
             position: fixed;
@@ -358,7 +346,6 @@
             transform: translateX(-50%) translateY(0);
             opacity: 1;
         }
-
         @media (max-width: 600px) {
             .hero { padding: 60px 20px 40px; }
             .hero h1 { font-size: 30px; }
@@ -370,17 +357,14 @@
     </style>
 </head>
 <body>
-
     <!-- 背景粒子 -->
     <div class="particles" id="particles"></div>
-
     <!-- Toast -->
     <div class="toast" id="toast">感谢关注 ❤️ 已累计 <span id="toastCount">0</span> 次点击</div>
-
     <!-- ===== Hero ===== -->
     <header class="hero">
         <div class="hero-badge">
-            <span class="dot"></span> 活跃开发中 · v1.0.9
+            <span class="dot"></span> 活跃开发中 · v1.1.1
         </div>
         <h1>让 AI 助手<span class="gradient">触手可及</span></h1>
         <p class="subtitle">Little Claude 把命令行里的编程神器，变成人人都能上手的桌面应用</p>
@@ -399,10 +383,8 @@
             </div>
         </div>
     </header>
-
     <!-- ===== 主体 ===== -->
     <div class="main">
-
         <div class="highlight-card c1">
             <div class="card-header">
                 <div class="card-icon">🔀</div>
@@ -413,7 +395,6 @@
                 写简单脚本用小模型省钱，啃硬骨头时切大模型保质量，切换过程行云流水，连刷新页面都不用。
             </p>
         </div>
-
         <div class="highlight-card c2">
             <div class="card-header">
                 <div class="card-icon">🛡️</div>
@@ -424,7 +405,6 @@
                 每一步都会跳出简洁的权限卡片，绿灯还是红灯你说了算。在机器效率和你对电脑的掌控之间，画了一条清晰的红线。
             </p>
         </div>
-
         <div class="highlight-card c3">
             <div class="card-header">
                 <div class="card-icon">📡</div>
@@ -432,21 +412,21 @@
             </div>
             <p>
                 思考过程实时流式渲染，AI 的推理链一目了然——不黑箱。
-                支持多 Tab 同时对话，每个会话独立运转。聊到一半觉得方向不对？一键退回到任意历史节点，不用从头开始。
+                回复速度实时显示，tok/s 尽在眼前。消息想带走？选中即复制，正文、思考过程、工具调用都能复制。
+                支持多 Tab 同时对话，每个会话独立运转。聊到一半觉得方向不对？一键退回到任意历史节点，重新分叉，不用从头开始。
             </p>
         </div>
-
         <div class="highlight-card c4">
             <div class="card-header">
                 <div class="card-icon">👁️</div>
-                <h3>不止读代码，还能看视频、识图片</h3>
+                <h3>不止读代码，还能看视频、识图片、当面试官</h3>
             </div>
             <p>
                 拖张截图进去，它能看懂。丢个视频链接——不管是 B 站教程还是 YouTube 讲座——
                 自动下载、语音转文字、逐帧分析画面，两三分钟出结构化报告。原本要啃半小时的视频课，喝口水的功夫就看完了。
+                内置面试助手：把题目丢给它，模型直接识别答案，还能本地识别转文字发送，双通道兜底，回答不再掉线。
             </p>
         </div>
-
         <div class="highlight-card c5">
             <div class="card-header">
                 <div class="card-icon">💬</div>
@@ -457,18 +437,17 @@
                 还能在 Claude 格式和 Codex 格式之间一键互转，换了工具数据也不丢。支持导出 Markdown、JSON，想怎么备份都行。
             </p>
         </div>
-
         <div class="highlight-card c6">
             <div class="card-header">
                 <div class="card-icon">📦</div>
-                <h3>下载解压就能用，不折腾</h3>
+                <h3>下载解压就能用，更新自动推送</h3>
             </div>
             <p>
                 市面上类似的工具光是配置环境就能劝退大半。Little Claude 做了全自动安装向导，
-                自动检测网络选最快镜像，依赖链一条龙搞定。Windows 用户还能拿到单文件便携版，22MB，U 盘带走都行。
+                自动检测网络选最快镜像，依赖链一条龙搞定。Windows 用户还能拿到单文件便携版，22MB，免安装免管理员，U 盘带走都行。
+                新版本发布后应用内一键升级，签名校验保证更新安全可靠，永远用上最新功能。
             </p>
         </div>
-
         <!-- 技术特色 -->
         <p class="section-title">✨ 技术亮点</p>
         <div class="feature-grid">
@@ -480,8 +459,11 @@
             <div class="feature-tag">faster-whisper 语音识别</div>
             <div class="feature-tag">NDJSON 流式解析</div>
             <div class="feature-tag">多 Tab 并行架构</div>
+            <div class="feature-tag">tok/s 实时速度显示</div>
+            <div class="feature-tag">应用内自动更新</div>
+            <div class="feature-tag">消息选中复制</div>
+            <div class="feature-tag">面试助手双通道识别</div>
         </div>
-
         <!-- 下载区域 -->
         <div class="download-section">
             <p class="section-title">📥 选择你的下载方式</p>
@@ -504,15 +486,12 @@
                 </div>
             </div>
         </div>
-
     </div>
-
     <footer class="footer">
-        由 <strong>高渊博</strong> 独立设计与开发 · 
+        由 <strong>高渊博</strong> 独立设计与开发 ·
         <a href="https://github.com/qingyu321/Little-Claude" target="_blank">GitHub 上点个 Star ⭐</a> 是对我最大的鼓励<br>
         <span style="color:#aaa;font-size:11px;">Little Claude 是 Claude Code CLI 的非官方开源桌面客户端，与 Anthropic 公司无关</span>
     </footer>
-
     <script>
     (function(){
         // ========== 点击计数器 ==========
@@ -522,16 +501,13 @@
         if (!localStorage.getItem(STORAGE_KEY)) {
             localStorage.setItem(STORAGE_KEY, DEFAULT_COUNT);
         }
-
         const countEl = document.getElementById('clickCount');
         const toast = document.getElementById('toast');
         const toastCount = document.getElementById('toastCount');
         let toastTimer;
-
         function updateDisplay() {
             countEl.textContent = count.toLocaleString();
         }
-
         function showToast() {
             toastCount.textContent = count.toLocaleString();
             toast.classList.add('show');
@@ -540,23 +516,19 @@
                 toast.classList.remove('show');
             }, 2500);
         }
-
         function increment() {
             count++;
             localStorage.setItem(STORAGE_KEY, count);
             updateDisplay();
             showToast();
         }
-
         // 绑定所有下载按钮
         document.querySelectorAll('.js-download-btn').forEach(function(btn) {
             btn.addEventListener('click', function(e) {
                 increment();
             });
         });
-
         updateDisplay();
-
         // ========== 背景粒子 ==========
         var container = document.getElementById('particles');
         var colors = ['#6c5ce7','#e17055','#00b894','#fdcb6e','#74b9ff','#fd79a8'];
@@ -572,7 +544,6 @@
             dot.style.animationDelay = (Math.random() * 10) + 's';
             container.appendChild(dot);
         }
-
         // ========== 卡片滚动渐现 ==========
         var cards = document.querySelectorAll('.highlight-card');
         var observer = new IntersectionObserver(function(entries){
@@ -583,7 +554,6 @@
             });
         }, { threshold: 0.15 });
         cards.forEach(function(c){ observer.observe(c); });
-
         // ========== 数字跳动效果 ==========
         var el = document.getElementById('clickCount');
         var target = count;
@@ -598,6 +568,5 @@
         requestAnimationFrame(tick);
     })();
     </script>
-
 </body>
 </html>
