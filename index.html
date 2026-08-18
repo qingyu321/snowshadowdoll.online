@@ -10,7 +10,7 @@
     <meta property="og:description" content="一个入口驾驭 Claude Code / Codex / DeepSeek 三大 Harness——权限成为卡片、计划成为审查单、提问成为表单。开源免费，单文件免安装。">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://snowshadowdoll.online">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐾</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%236c5ce7'/%3E%3Cstop offset='1' stop-color='%23e17055'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='4' y='4' width='56' height='56' rx='16' fill='url(%23g)'/%3E%3Crect x='14' y='17' width='36' height='24' rx='9' fill='%23fff'/%3E%3Cpath d='M24 40l-4 10 12-10z' fill='%23fff'/%3E%3Ccircle cx='26' cy='29' r='2.8' fill='%236c5ce7'/%3E%3Ccircle cx='38' cy='29' r='2.8' fill='%23e17055'/%3E%3C/svg%3E">
     <style>
         :root {
             --bg: #f8f9fc;
@@ -225,6 +225,27 @@
         @media (max-width: 600px) {
             .card-tag { top: 14px; right: 14px; letter-spacing: 0.5px; }
         }
+        /* 右下角杂志风序号水印 */
+        .card-num {
+            position: absolute;
+            right: 22px;
+            bottom: 6px;
+            font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", SimSun, serif;
+            font-size: 58px;
+            font-weight: 900;
+            line-height: 1;
+            color: var(--cc);
+            opacity: 0.09;
+            pointer-events: none;
+            user-select: none;
+        }
+        /* 首卡：旗舰位，打破均匀对称 */
+        .highlight-card.lead-card {
+            padding: 44px 40px;
+            background: linear-gradient(135deg, rgba(108,92,231,0.05) 0%, #fff 45%);
+        }
+        .highlight-card.lead-card h3 { font-size: 24px; }
+        .highlight-card.lead-card p { font-size: 15.5px; }
         .highlight-card .card-header {
             display: flex;
             align-items: center;
@@ -243,14 +264,18 @@
         .highlight-card .card-icon svg { width: 26px; height: 26px; }
         .highlight-card:hover .card-icon { transform: scale(1.1) rotate(-5deg); }
         .highlight-card h3 {
-            font-size: 18px;
-            font-weight: 700;
-            color: #1a1a2e;
+            font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", SimSun, serif;
+            font-size: 21px;
+            font-weight: 900;
+            color: #16162b;
+            letter-spacing: 0.3px;
+            line-height: 1.5;
         }
         .highlight-card p {
-            color: var(--sub);
-            font-size: 14px;
-            line-height: 1.8;
+            color: #565670;
+            font-size: 15px;
+            line-height: 1.9;
+            letter-spacing: 0.2px;
         }
         .highlight-card p strong {
             color: var(--text);
@@ -274,29 +299,29 @@
         .c7 .card-icon { background: #e8fdfa; color: #00a8a8; }
         /* ========== 功能网格 ========== */
         .section-title {
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: var(--accent);
-            font-weight: 700;
-            margin-bottom: 20px;
-            text-align: center;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 17px;
+            letter-spacing: 1px;
+            color: #16162b;
+            font-weight: 800;
+            margin-bottom: 18px;
         }
-        .section-title::before,
-        .section-title::after {
+        .section-title::before {
             content: "";
             display: inline-block;
-            width: 36px;
-            height: 1px;
-            background: var(--border);
-            vertical-align: middle;
-            margin: 0 14px;
+            width: 6px;
+            height: 20px;
+            border-radius: 3px;
+            background: linear-gradient(180deg, #6c5ce7, #e17055);
+            flex-shrink: 0;
         }
         .geek-note {
-            text-align: center;
+            text-align: left;
             color: var(--sub);
             font-size: 13px;
-            margin: -8px 0 20px;
+            margin: 0 0 20px;
         }
         .feature-grid {
             display: grid;
@@ -333,9 +358,9 @@
             box-shadow: var(--shadow);
         }
         .download-section .section-title {
+            justify-content: center;
             color: #1a1a2e;
             font-size: 18px;
-            text-transform: none;
             letter-spacing: 0;
         }
         .platform-grid {
@@ -471,8 +496,9 @@
     <!-- ===== 主体 ===== -->
     <main class="main">
         <section aria-label="核心亮点">
-            <div class="highlight-card c1">
+            <div class="highlight-card c1 lead-card">
                 <span class="card-tag">三合一</span>
+                <span class="card-num" aria-hidden="true">01</span>
                 <div class="card-header">
                     <div class="card-icon" aria-hidden="true">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
@@ -489,6 +515,7 @@
 
             <div class="highlight-card c2">
                 <span class="card-tag">权限安全</span>
+                <span class="card-num" aria-hidden="true">02</span>
                 <div class="card-header">
                     <div class="card-icon" aria-hidden="true">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
@@ -504,6 +531,7 @@
 
             <div class="highlight-card c3">
                 <span class="card-tag">流式可视</span>
+                <span class="card-num" aria-hidden="true">03</span>
                 <div class="card-header">
                     <div class="card-icon" aria-hidden="true">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
@@ -519,6 +547,7 @@
 
             <div class="highlight-card c4">
                 <span class="card-tag">多模态</span>
+                <span class="card-num" aria-hidden="true">04</span>
                 <div class="card-header">
                     <div class="card-icon" aria-hidden="true">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
@@ -534,6 +563,7 @@
 
             <div class="highlight-card c5">
                 <span class="card-tag">会话管理</span>
+                <span class="card-num" aria-hidden="true">05</span>
                 <div class="card-header">
                     <div class="card-icon" aria-hidden="true">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -549,6 +579,7 @@
 
             <div class="highlight-card c6">
                 <span class="card-tag">零配置</span>
+                <span class="card-num" aria-hidden="true">06</span>
                 <div class="card-header">
                     <div class="card-icon" aria-hidden="true">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
@@ -564,6 +595,7 @@
 
             <div class="highlight-card c7">
                 <span class="card-tag">桌面陪伴</span>
+                <span class="card-num" aria-hidden="true">07</span>
                 <div class="card-header">
                     <div class="card-icon" aria-hidden="true">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
