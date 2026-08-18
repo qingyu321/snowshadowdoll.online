@@ -212,39 +212,25 @@
         .card-tag {
             position: absolute;
             top: 20px; right: 22px;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 1.5px;
+            font-size: 12.5px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
             color: var(--cc);
             background: var(--cc-soft);
             border: 1px solid var(--cc-line);
-            padding: 3px 10px;
-            border-radius: 12px;
+            padding: 4px 12px;
+            border-radius: 20px;
             z-index: 1;
         }
         @media (max-width: 600px) {
-            .card-tag { top: 14px; right: 14px; letter-spacing: 0.5px; }
-        }
-        /* 右下角杂志风序号水印 */
-        .card-num {
-            position: absolute;
-            right: 22px;
-            bottom: 6px;
-            font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", SimSun, serif;
-            font-size: 58px;
-            font-weight: 900;
-            line-height: 1;
-            color: var(--cc);
-            opacity: 0.09;
-            pointer-events: none;
-            user-select: none;
+            .card-tag { top: 14px; right: 14px; }
         }
         /* 首卡：旗舰位，打破均匀对称 */
         .highlight-card.lead-card {
             padding: 44px 40px;
             background: linear-gradient(135deg, rgba(108,92,231,0.05) 0%, #fff 45%);
         }
-        .highlight-card.lead-card h3 { font-size: 24px; }
+        .highlight-card.lead-card h3 { font-size: 20px; }
         .highlight-card.lead-card p { font-size: 15.5px; }
         .highlight-card .card-header {
             display: flex;
@@ -264,12 +250,12 @@
         .highlight-card .card-icon svg { width: 26px; height: 26px; }
         .highlight-card:hover .card-icon { transform: scale(1.1) rotate(-5deg); }
         .highlight-card h3 {
-            font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", SimSun, serif;
-            font-size: 21px;
-            font-weight: 900;
-            color: #16162b;
-            letter-spacing: 0.3px;
-            line-height: 1.5;
+            font-family: inherit;
+            font-size: 18px;
+            font-weight: 700;
+            color: #23233a;
+            letter-spacing: 0.2px;
+            line-height: 1.6;
         }
         .highlight-card p {
             color: #565670;
@@ -498,7 +484,6 @@
         <section aria-label="核心亮点">
             <div class="highlight-card c1 lead-card">
                 <span class="card-tag">三合一</span>
-                <span class="card-num" aria-hidden="true">01</span>
                 <div class="card-header">
                     <div class="card-icon" aria-hidden="true">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
@@ -515,7 +500,6 @@
 
             <div class="highlight-card c2">
                 <span class="card-tag">权限安全</span>
-                <span class="card-num" aria-hidden="true">02</span>
                 <div class="card-header">
                     <div class="card-icon" aria-hidden="true">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
@@ -531,7 +515,6 @@
 
             <div class="highlight-card c3">
                 <span class="card-tag">流式可视</span>
-                <span class="card-num" aria-hidden="true">03</span>
                 <div class="card-header">
                     <div class="card-icon" aria-hidden="true">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
@@ -547,7 +530,6 @@
 
             <div class="highlight-card c4">
                 <span class="card-tag">多模态</span>
-                <span class="card-num" aria-hidden="true">04</span>
                 <div class="card-header">
                     <div class="card-icon" aria-hidden="true">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
@@ -563,7 +545,6 @@
 
             <div class="highlight-card c5">
                 <span class="card-tag">会话管理</span>
-                <span class="card-num" aria-hidden="true">05</span>
                 <div class="card-header">
                     <div class="card-icon" aria-hidden="true">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -579,7 +560,6 @@
 
             <div class="highlight-card c6">
                 <span class="card-tag">零配置</span>
-                <span class="card-num" aria-hidden="true">06</span>
                 <div class="card-header">
                     <div class="card-icon" aria-hidden="true">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
@@ -595,7 +575,6 @@
 
             <div class="highlight-card c7">
                 <span class="card-tag">桌面陪伴</span>
-                <span class="card-num" aria-hidden="true">07</span>
                 <div class="card-header">
                     <div class="card-icon" aria-hidden="true">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
