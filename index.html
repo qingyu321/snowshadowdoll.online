@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Little Claude — 你的桌面 AI 工作伙伴</title>
+    <meta name="description" content="Little Claude：协议级 AI Agent Harness 桌面客户端。一个应用统一接入 Claude Code / Codex / DeepSeek 三大 Harness，权限卡片、Rewind 回退、视频分析、面试助手，43MB 单文件免安装。">
+    <meta name="theme-color" content="#6c5ce7">
+    <meta property="og:title" content="Little Claude — 你的桌面 AI 工作伙伴">
+    <meta property="og:description" content="一个入口驾驭 Claude Code / Codex / DeepSeek 三大 Harness——权限成为卡片、计划成为审查单、提问成为表单。开源免费，单文件免安装。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://snowshadowdoll.online">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐾</text></svg>">
     <style>
         :root {
             --bg: #f8f9fc;
@@ -17,12 +24,19 @@
             --radius: 18px;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
             background: var(--bg);
             color: var(--text);
             line-height: 1.7;
             overflow-x: hidden;
+        }
+        ::selection { background: rgba(108,92,231,0.18); }
+        a:focus-visible, button:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+            border-radius: 6px;
         }
         /* ========== 动态背景粒子 ========== */
         .particles {
@@ -34,6 +48,7 @@
         .particle {
             position: absolute;
             border-radius: 50%;
+            will-change: transform, opacity;
             animation: floatUp linear infinite;
             opacity: 0;
         }
@@ -94,7 +109,9 @@
         .hero h1 .gradient {
             background: linear-gradient(135deg, #6c5ce7, #e17055);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
+            color: transparent;
         }
         .hero .subtitle {
             font-size: 18px;
@@ -110,9 +127,7 @@
             margin-top: 36px;
             animation: fadeInUp 0.6s ease 0.3s both;
         }
-        .stat-item {
-            text-align: center;
-        }
+        .stat-item { text-align: center; }
         .stat-num {
             font-size: 28px;
             font-weight: 800;
@@ -123,6 +138,25 @@
             color: var(--sub);
             margin-top: 4px;
         }
+        /* ========== 版本亮点 chips ========== */
+        .whats-new {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 28px;
+            animation: fadeInUp 0.6s ease 0.4s both;
+        }
+        .whats-new .chip {
+            background: rgba(108,92,231,0.08);
+            border: 1px solid rgba(108,92,231,0.22);
+            color: #5a4bd1;
+            border-radius: 20px;
+            padding: 5px 14px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .whats-new .chip::before { content: "✦ "; opacity: 0.7; }
         /* ========== 主容器 ========== */
         .main {
             position: relative;
@@ -133,24 +167,63 @@
         }
         /* ========== 亮点卡片 ========== */
         .highlight-card {
+            position: relative;
+            overflow: hidden;
             background: var(--card);
             border: 1px solid var(--border);
             border-radius: var(--radius);
             padding: 36px;
             margin-bottom: 32px;
             box-shadow: var(--shadow);
-            transition: transform 0.3s, box-shadow 0.3s;
             opacity: 0;
             transform: translateY(30px);
-            transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.3s;
+            transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.3s ease, border-color 0.3s ease;
         }
-        .highlight-card.visible {
-            opacity: 1;
-            transform: translateY(0);
+        .highlight-card.visible { opacity: 1; transform: translateY(0); }
+        .highlight-card.visible:hover {
+            transform: translateY(-4px);
+            border-color: var(--cc);
+            box-shadow: 0 14px 36px var(--cc-glow);
         }
-        .highlight-card:hover {
-            transform: translateY(-4px) !important;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        /* 顶部渐变彩条（悬停浮现） */
+        .highlight-card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--cc), transparent 75%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .highlight-card.visible:hover::before { opacity: 1; }
+        /* 悬停光扫 */
+        .highlight-card::after {
+            content: "";
+            position: absolute;
+            top: 0; left: -80%;
+            width: 55%; height: 100%;
+            background: linear-gradient(100deg, transparent, rgba(255,255,255,0.45), transparent);
+            transform: skewX(-20deg);
+            transition: left 0.8s ease;
+            pointer-events: none;
+        }
+        .highlight-card.visible:hover::after { left: 135%; }
+        /* 右上角主题标签 */
+        .card-tag {
+            position: absolute;
+            top: 20px; right: 22px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            color: var(--cc);
+            background: var(--cc-soft);
+            border: 1px solid var(--cc-line);
+            padding: 3px 10px;
+            border-radius: 12px;
+            z-index: 1;
+        }
+        @media (max-width: 600px) {
+            .card-tag { top: 14px; right: 14px; letter-spacing: 0.5px; }
         }
         .highlight-card .card-header {
             display: flex;
@@ -167,12 +240,8 @@
             flex-shrink: 0;
             transition: transform 0.3s;
         }
-        .highlight-card .card-icon svg {
-            width: 26px; height: 26px;
-        }
-        .highlight-card:hover .card-icon {
-            transform: scale(1.1) rotate(-5deg);
-        }
+        .highlight-card .card-icon svg { width: 26px; height: 26px; }
+        .highlight-card:hover .card-icon { transform: scale(1.1) rotate(-5deg); }
         .highlight-card h3 {
             font-size: 18px;
             font-weight: 700;
@@ -183,12 +252,26 @@
             font-size: 14px;
             line-height: 1.8;
         }
+        .highlight-card p strong {
+            color: var(--text);
+            background: linear-gradient(transparent 62%, var(--cc-soft) 62%);
+            padding: 0 2px;
+            border-radius: 2px;
+        }
+        .c1 { --cc: #6c5ce7; --cc-soft: rgba(108,92,231,0.09);  --cc-line: rgba(108,92,231,0.25);  --cc-glow: rgba(108,92,231,0.16); }
+        .c2 { --cc: #e17055; --cc-soft: rgba(225,112,85,0.09);  --cc-line: rgba(225,112,85,0.28);  --cc-glow: rgba(225,112,85,0.16); }
+        .c3 { --cc: #0984e3; --cc-soft: rgba(9,132,227,0.09);   --cc-line: rgba(9,132,227,0.25);   --cc-glow: rgba(9,132,227,0.15); }
+        .c4 { --cc: #00b894; --cc-soft: rgba(0,184,148,0.09);   --cc-line: rgba(0,184,148,0.25);   --cc-glow: rgba(0,184,148,0.15); }
+        .c5 { --cc: #f39c12; --cc-soft: rgba(243,156,18,0.10);  --cc-line: rgba(243,156,18,0.28);  --cc-glow: rgba(243,156,18,0.15); }
+        .c6 { --cc: #e84393; --cc-soft: rgba(232,67,147,0.09);  --cc-line: rgba(232,67,147,0.25);  --cc-glow: rgba(232,67,147,0.15); }
+        .c7 { --cc: #00a8a8; --cc-soft: rgba(0,168,168,0.09);   --cc-line: rgba(0,168,168,0.25);   --cc-glow: rgba(0,168,168,0.15); }
         .c1 .card-icon { background: #eee8fd; color: #6c5ce7; }
         .c2 .card-icon { background: #fde8e8; color: #e17055; }
         .c3 .card-icon { background: #e8f4fd; color: #0984e3; }
         .c4 .card-icon { background: #e8fde8; color: #00b894; }
         .c5 .card-icon { background: #fdf3e8; color: #f39c12; }
         .c6 .card-icon { background: #fde8f8; color: #e84393; }
+        .c7 .card-icon { background: #e8fdfa; color: #00a8a8; }
         /* ========== 功能网格 ========== */
         .section-title {
             font-size: 13px;
@@ -230,12 +313,13 @@
             color: #4a4a60;
             font-weight: 600;
             text-align: center;
-            transition: all 0.3s;
+            transition: border-color 0.3s, color 0.3s, transform 0.3s, box-shadow 0.3s;
             cursor: default;
         }
         .feature-tag:hover {
             border-color: var(--accent);
             color: var(--accent);
+            background: linear-gradient(180deg, #fff 0%, #f4f1ff 100%);
             transform: translateY(-2px);
             box-shadow: 0 4px 16px rgba(108,92,231,0.12);
         }
@@ -281,9 +365,7 @@
             justify-content: center;
             color: #1a1a2e;
         }
-        .platform-card .platform-icon svg {
-            width: 36px; height: 36px;
-        }
+        .platform-card .platform-icon svg { width: 36px; height: 36px; }
         .platform-card .platform-name {
             font-weight: 700;
             font-size: 16px;
@@ -302,27 +384,19 @@
             font-size: 14px;
             font-weight: 600;
             text-decoration: none;
-            transition: all 0.2s;
+            transition: background 0.2s, color 0.2s, border-color 0.2s;
             cursor: pointer;
             border: none;
             width: 100%;
             font-family: inherit;
         }
-        .btn-white {
-            background: #1a1a2e;
-            color: #fff;
-        }
-        .btn-white:hover {
-            background: #333;
-        }
+        .btn-white { background: #1a1a2e; color: #fff; }
+        .btn-white:hover { background: #333; }
         .btn-outline {
             border: 1px solid var(--border) !important;
             color: var(--sub);
             background: transparent;
-        }
-        .btn-outline:hover {
-            border-color: var(--accent) !important;
-            color: var(--accent);
+            cursor: not-allowed;
         }
         /* ========== Footer ========== */
         .footer {
@@ -339,23 +413,36 @@
             text-decoration: none;
             font-weight: 600;
         }
+        .footer a:hover { text-decoration: underline; }
         @media (max-width: 600px) {
             .hero { padding: 60px 20px 40px; }
             .hero h1 { font-size: 30px; }
             .hero .subtitle { font-size: 15px; }
             .stats-row { gap: 24px; flex-wrap: wrap; }
+            .stat-num { font-size: 22px; }
             .highlight-card { padding: 24px; }
             .download-section { padding: 28px 20px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            .particles { display: none; }
+            .highlight-card { opacity: 1; transform: none; }
         }
     </style>
 </head>
 <body>
     <!-- 背景粒子 -->
-    <div class="particles" id="particles"></div>
+    <div class="particles" id="particles" aria-hidden="true"></div>
+
     <!-- ===== Hero ===== -->
     <header class="hero">
         <div class="hero-badge">
-            <span class="dot"></span> 活跃开发中 · v1.1.1
+            <span class="dot" aria-hidden="true"></span> 活跃开发中 · <span id="version-num">v1.1.7</span>
         </div>
         <h1>让 AI 助手<span class="gradient">触手可及</span></h1>
         <p class="subtitle">不用折腾命令行，也能让 AI 帮你干活。写代码、看视频、理资料，就装这一个应用</p>
@@ -365,171 +452,277 @@
                 <div class="stat-label">网站访问量</div>
             </div>
             <div class="stat-item">
-                <div class="stat-num">全兼容</div>
-                <div class="stat-label">OpenAI / Anthropic 格式</div>
+                <div class="stat-num">三合一</div>
+                <div class="stat-label">Claude Code · Codex · DeepSeek</div>
             </div>
             <div class="stat-item">
-                <div class="stat-num">43 MB</div>
-                <div class="stat-label">小巧便携</div>
+                <div class="stat-num">单文件</div>
+                <div class="stat-label">免安装 · 免管理员 · 开箱即用</div>
             </div>
+        </div>
+        <div class="whats-new" aria-label="版本亮点">
+            <span class="chip">上下文口径对齐 DeepSeek Harness 1M 窗口</span>
+            <span class="chip">安全加固：默认 code 模式 + 注入防护</span>
+            <span class="chip">桌宠状态氛围 + 系统通知汇报</span>
+            <span class="chip">前端热更新，免重装升级</span>
         </div>
     </header>
+
     <!-- ===== 主体 ===== -->
-    <div class="main">
-        <div class="highlight-card c1">
-            <div class="card-header">
-                <div class="card-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+    <main class="main">
+        <section aria-label="核心亮点">
+            <div class="highlight-card c1">
+                <span class="card-tag">三合一</span>
+                <div class="card-header">
+                    <div class="card-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                    </div>
+                    <h3>Claude Code？Codex？DeepSeek？一个工作台全都要</h3>
                 </div>
-                <h3>Codex+gpt-5.6?Opencode+DeepSeek-V4-Pro?Claude Code+Fable5?不用纠结装哪个了</h3>
+                <p>
+                    别的客户端挑内核，Little Claude 直接把三大 Agent Harness 收进同一个桌面——
+                    <strong>Claude Code、Codex、DeepSeek</strong> 统一接入，聊天记录还能一键互转。
+                    任何兼容 OpenAI / Anthropic 格式的模型端点也能像 CCSwitch 一样直接挂上：
+                    写文案用小模型，改代码切大模型，想换随时换，跟换输入法一样顺手。
+                </p>
             </div>
-            <p>
-                现在的 AI 模型太多了，这个说它聪明，那个说它便宜，装一堆软件又乱又占地方。
-                Little Claude 把它们全收进一个应用里——只要模型端点兼容 OpenAI 或 Anthropic
-                格式，就能像 CCSwitch 一样直接接入、全部支持。写文案用小模型，改代码切大模型，
-                想换随时换，跟换输入法一样顺手。
-            </p>
-        </div>
-        <div class="highlight-card c2">
-            <div class="card-header">
-                <div class="card-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+
+            <div class="highlight-card c2">
+                <span class="card-tag">权限安全</span>
+                <div class="card-header">
+                    <div class="card-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <h3>它想动你的文件？先问过你</h3>
                 </div>
-                <h3>它想动你的文件？先问过你</h3>
+                <p>
+                    让 AI 碰你的电脑，谁都怕它乱来。所以它每一步都会先弹出一张卡片问你：
+                    这个文件能读吗？这条命令能跑吗？你点头它才动。它还会先把<strong>计划列成审查单</strong>给你过目，
+                    改到你满意再执行——在你的眼皮子底下干活，跑不远的。
+                </p>
             </div>
-            <p>
-                让 AI 碰你的电脑，谁都怕它乱来。所以它每一步都会先弹出一张卡片问你：
-                这个文件能读吗？这条命令能跑吗？你点头它才动。它在你的眼皮子底下干活，跑不远的。
-            </p>
-        </div>
-        <div class="highlight-card c3">
-            <div class="card-header">
-                <div class="card-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+
+            <div class="highlight-card c3">
+                <span class="card-tag">流式可视</span>
+                <div class="card-header">
+                    <div class="card-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </div>
+                    <h3>它不是"啪"地丢个答案就完事</h3>
                 </div>
-                <h3>它不是"啪"地丢个答案就完事</h3>
+                <p>
+                    回答是一行一行流出来的，你能看着它推理、改主意、甚至发现自己说错了往回找补。
+                    聊着聊着跑偏了？<strong>Rewind 按轮次回退</strong>，连当时的文件状态一起恢复，
+                    回退完它还记得之前聊过什么——每一步都留了后悔药。
+                </p>
             </div>
-            <p>
-                回答是一行一行流出来的，你能看着它推理、改主意、甚至发现自己说错了往回找补。
-                聊着聊着跑偏了？退回到任何一步重新来，每一步都留了后悔药。
-            </p>
-        </div>
-        <div class="highlight-card c4">
-            <div class="card-header">
-                <div class="card-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+
+            <div class="highlight-card c4">
+                <span class="card-tag">多模态</span>
+                <div class="card-header">
+                    <div class="card-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+                    </div>
+                    <h3>刷到个视频教程，三分钟帮你啃完</h3>
                 </div>
-                <h3>刷到个视频教程，三分钟帮你啃完</h3>
+                <p>
+                    B 站、YouTube 的链接丢进来，自动下载、语音转文字、逐帧看画面，
+                    几分钟吐给你一份要点总结。还有面试模式：题目截个图丢过去，它帮你识别题目、理清思路，
+                    面试前临时抱佛脚就靠它了。
+                </p>
             </div>
-            <p>
-                B 站、YouTube 的链接丢进来，自动下载、语音转文字、逐帧看画面，
-                几分钟吐给你一份要点总结。还有面试模式：题目截个图丢过去，它帮你识别题目、理清思路，
-                面试前临时抱佛脚就靠它了。
-            </p>
-        </div>
-        <div class="highlight-card c5">
-            <div class="card-header">
-                <div class="card-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+
+            <div class="highlight-card c5">
+                <span class="card-tag">会话管理</span>
+                <div class="card-header">
+                    <div class="card-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    </div>
+                    <h3>上周聊的啥？搜一下就回到现场</h3>
                 </div>
-                <h3>上周聊的啥？搜一下就回到现场</h3>
+                <p>
+                    历史对话全部全文可搜，按日期、按项目筛一下，点进去就是当时的聊天现场。
+                    换工具也不怕搬家——Claude 和 Codex 的聊天记录一键互转，想导出 Markdown、JSON 都随你。
+                    会话数据全部存在本地，<strong>不绑任何云账号</strong>。
+                </p>
             </div>
-            <p>
-                历史对话全部全文可搜，按日期、按项目筛一下，点进去就是当时的聊天现场。
-                换工具也不怕搬家——Claude 和 Codex 的聊天记录一键互转，想导出 Markdown、JSON 都随你。
-            </p>
-        </div>
-        <div class="highlight-card c6">
-            <div class="card-header">
-                <div class="card-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+
+            <div class="highlight-card c6">
+                <span class="card-tag">零配置</span>
+                <div class="card-header">
+                    <div class="card-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                    </div>
+                    <h3>不用配环境，下载完就能开始用</h3>
                 </div>
-                <h3>不用配环境，下载完就能开始用</h3>
+                <p>
+                    受够了"先装个 Python，再配个环境变量"？安装向导全自动搞定，
+                    Windows 单文件便携版<strong>免安装、免管理员</strong>，U 盘一插就能跑。
+                    出新版本应用内一键热更，GitHub 卡了自动走 CDN 和镜像——不用到处找安装包。
+                </p>
             </div>
-            <p>
-                受够了"先装个 Python，再配个环境变量"？安装向导全自动搞定，
-                Windows 还有 43MB 的免安装版，U 盘一插就能跑。以后出新版本，应用里一键升级，不用到处找安装包。
-            </p>
-        </div>
+
+            <div class="highlight-card c7">
+                <span class="card-tag">桌面陪伴</span>
+                <div class="card-header">
+                    <div class="card-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    </div>
+                    <h3>它还是你的桌面伙伴</h3>
+                </div>
+                <p>
+                    桌宠会在旁边陪着你：思考时冒点点、跑工具时扫描线、任务完成撒彩带、失败掉泪滴，
+                    任务结果还会弹系统通知，切走也不会错过。喜欢氛围感的，还能设动态壁纸——
+                    <strong>桌面与 AI 共生</strong>，帧率不够它自己降级，绝不拖慢你的界面。
+                </p>
+            </div>
+        </section>
+
         <!-- 技术特色 -->
-        <p class="section-title">技术亮点</p>
-        <p class="geek-note">我们不藏私——下面的每一项技术选型都开源可查、经得起推敲。</p>
-        <div class="feature-grid">
-            <div class="feature-tag">OpenAI / Anthropic 兼容层</div>
-            <div class="feature-tag">Tauri 2 原生体验</div>
-            <div class="feature-tag">React 19 + TypeScript</div>
-            <div class="feature-tag">Rust 高性能后端</div>
-            <div class="feature-tag">MCP 协议支持</div>
-            <div class="feature-tag">faster-whisper 语音识别</div>
-            <div class="feature-tag">NDJSON 流式解析</div>
-            <div class="feature-tag">多 Tab 并行架构</div>
-            <div class="feature-tag">tok/s 实时速度显示</div>
-            <div class="feature-tag">应用内自动更新</div>
-            <div class="feature-tag">消息选中复制</div>
-        </div>
+        <section aria-label="技术亮点">
+            <h2 class="section-title">技术亮点</h2>
+            <p class="geek-note">我们不藏私——下面的每一项技术选型都开源可查、经得起推敲。</p>
+            <div class="feature-grid">
+                <div class="feature-tag">三 Harness 统一抽象</div>
+                <div class="feature-tag">SDK 双向控制协议</div>
+                <div class="feature-tag">OpenAI / Anthropic 兼容层</div>
+                <div class="feature-tag">Tauri 2 + Rust 内核</div>
+                <div class="feature-tag">React 19 + TypeScript</div>
+                <div class="feature-tag">Rewind 原生检查点回退</div>
+                <div class="feature-tag">MCP 协议支持</div>
+                <div class="feature-tag">NDJSON 流式解析</div>
+                <div class="feature-tag">多会话真并发架构</div>
+                <div class="feature-tag">热更新 + 多源降级</div>
+                <div class="feature-tag">faster-whisper 语音识别</div>
+                <div class="feature-tag">tok/s 实时速度显示</div>
+            </div>
+        </section>
+
         <!-- 下载区域 -->
-        <div class="download-section">
-            <p class="section-title">选择你的下载方式</p>
-            <p style="color:var(--sub);font-size:14px;margin-bottom:8px;">完全免费 · 开源 · 持续更新</p>
+        <section class="download-section" aria-label="下载">
+            <h2 class="section-title">选择你的下载方式</h2>
+            <p style="color:var(--sub);font-size:14px;margin-bottom:8px;">完全免费 · Apache-2.0 开源 · 持续更新</p>
             <div class="platform-grid">
                 <div class="platform-card">
-                    <div class="platform-icon">
+                    <div class="platform-icon" aria-hidden="true">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
                     </div>
                     <div class="platform-name">GitHub</div>
-                    <a href="https://github.com/qingyu321/Little-Claude" class="platform-btn btn-white js-download-btn" target="_blank">前往下载</a>
+                    <div class="platform-count">Windows 便携版 · 单文件免安装</div>
+                    <a href="https://github.com/qingyu321/Little-Claude/releases" class="platform-btn btn-white" target="_blank" rel="noopener">前往 Releases 下载</a>
                 </div>
                 <div class="platform-card">
-                    <div class="platform-icon">
+                    <div class="platform-icon" aria-hidden="true">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
                     </div>
                     <div class="platform-name">夸克网盘</div>
-                    <button class="platform-btn btn-outline js-download-btn" disabled>即将上线</button>
+                    <button class="platform-btn btn-outline" disabled aria-disabled="true">即将上线</button>
                 </div>
                 <div class="platform-card">
-                    <div class="platform-icon">
+                    <div class="platform-icon" aria-hidden="true">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
                     </div>
                     <div class="platform-name">百度网盘</div>
-                    <button class="platform-btn btn-outline js-download-btn" disabled>即将上线</button>
+                    <button class="platform-btn btn-outline" disabled aria-disabled="true">即将上线</button>
                 </div>
             </div>
-        </div>
-    </div>
+        </section>
+    </main>
+
     <footer class="footer">
         由 <strong>高渊博</strong> 独立设计与开发 ·
-        <a href="https://github.com/qingyu321/Little-Claude" target="_blank">GitHub 上点个 Star</a> 是对我最大的鼓励<br>
-        <span style="color:#aaa;font-size:11px;">Little Claude 是 Claude Code CLI 的非官方开源桌面客户端，与 Anthropic 公司无关</span>
+        <a href="https://github.com/qingyu321/Little-Claude" target="_blank" rel="noopener">GitHub 上点个 Star</a> 是对我最大的鼓励<br>
+        <span style="color:#aaa;font-size:11px;">Little Claude 是 Claude Code CLI 的非官方开源桌面客户端（Apache-2.0），与 Anthropic 公司无关</span>
     </footer>
+
     <!-- 不蒜子：真实访问量统计（免费开源） -->
     <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     <script>
+    // ========== 版本号动态拉取 ==========
+    // 取数链（与客户端更新管线一致的多源降级）：
+    //   latest.json: raw.githubusercontent → jsdelivr CDN → ghproxy 镜像（单源 5s 超时）
+    //   兜底: GitHub Releases API（releases/latest 的 tag_name）
+    //   全部失败: 保留静态版本号，不误报
     (function(){
-        // ========== 背景粒子 ==========
-        var container = document.getElementById('particles');
-        var colors = ['#6c5ce7','#e17055','#00b894','#fdcb6e','#74b9ff','#fd79a8'];
-        for(var i=0; i<60; i++){
-            var dot = document.createElement('div');
-            dot.className = 'particle';
-            var size = Math.random() * 9 + 5;
-            dot.style.width = size + 'px';
-            dot.style.height = size + 'px';
-            dot.style.left = Math.random() * 100 + '%';
-            dot.style.background = colors[Math.floor(Math.random()*colors.length)];
-            dot.style.animationDuration = (Math.random() * 8 + 6) + 's';
-            dot.style.animationDelay = (Math.random() * 8) + 's';
-            container.appendChild(dot);
+        var el = document.getElementById('version-num');
+        if (!el) return;
+        var FALLBACK = el.textContent.trim();
+        var LJ_PATH = 'qingyu321/Little-Claude/main/latest.json';
+        function pickLJ(j){ return j && (j.version || j.tag || j.latest); }
+        var sources = [
+            { url: 'https://raw.githubusercontent.com/' + LJ_PATH, pick: pickLJ },
+            { url: 'https://cdn.jsdelivr.net/gh/' + LJ_PATH, pick: pickLJ },
+            { url: 'https://ghproxy.com/https://raw.githubusercontent.com/' + LJ_PATH, pick: pickLJ },
+            { url: 'https://api.github.com/repos/qingyu321/Little-Claude/releases/latest',
+              pick: function(j){ return j && j.tag_name; } }
+        ];
+        function norm(v){
+            v = String(v == null ? '' : v).trim();
+            if (!v) return null;
+            return /^v/i.test(v) ? v : 'v' + v;
         }
-        // ========== 卡片滚动渐现 ==========
+        function fetchTimeout(url, ms){
+            if ('AbortController' in window) {
+                var ctrl = new AbortController();
+                var timer = setTimeout(function(){ ctrl.abort(); }, ms);
+                return fetch(url, { signal: ctrl.signal })
+                    .then(function(r){ clearTimeout(timer); return r; })
+                    .catch(function(e){ clearTimeout(timer); throw e; });
+            }
+            return fetch(url);
+        }
+        (async function resolve(){
+            for (var i = 0; i < sources.length; i++) {
+                try {
+                    var resp = await fetchTimeout(sources[i].url, 5000);
+                    if (!resp || !resp.ok) continue;
+                    var v = norm(sources[i].pick(await resp.json()));
+                    if (v) { el.textContent = v; return; }
+                } catch (e) { /* 单源失败，继续下一源 */ }
+            }
+            el.textContent = FALLBACK;
+        })();
+    })();
+
+    (function(){
+        var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // ========== 背景粒子（尊重系统减弱动态效果偏好；移动端减量） ==========
+        if (!reduced) {
+            var container = document.getElementById('particles');
+            var colors = ['#6c5ce7','#e17055','#00b894','#fdcb6e','#74b9ff','#fd79a8'];
+            var count = window.innerWidth < 600 ? 24 : 50;
+            var frag = document.createDocumentFragment();
+            for (var i = 0; i < count; i++) {
+                var dot = document.createElement('div');
+                dot.className = 'particle';
+                var size = Math.random() * 9 + 5;
+                dot.style.width = size + 'px';
+                dot.style.height = size + 'px';
+                dot.style.left = Math.random() * 100 + '%';
+                dot.style.background = colors[Math.floor(Math.random() * colors.length)];
+                dot.style.animationDuration = (Math.random() * 8 + 6) + 's';
+                dot.style.animationDelay = (Math.random() * 8) + 's';
+                frag.appendChild(dot);
+            }
+            container.appendChild(frag);
+        }
+
+        // ========== 卡片滚动渐现（无 IntersectionObserver 时直接显示） ==========
         var cards = document.querySelectorAll('.highlight-card');
-        var observer = new IntersectionObserver(function(entries){
-            entries.forEach(function(e){
-                if(e.isIntersecting){
-                    e.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.15 });
-        cards.forEach(function(c){ observer.observe(c); });
+        if ('IntersectionObserver' in window && !reduced) {
+            var observer = new IntersectionObserver(function(entries){
+                entries.forEach(function(e){
+                    if (e.isIntersecting) {
+                        e.target.classList.add('visible');
+                        observer.unobserve(e.target);
+                    }
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+            cards.forEach(function(c){ observer.observe(c); });
+        } else {
+            cards.forEach(function(c){ c.classList.add('visible'); });
+        }
     })();
     </script>
 </body>
